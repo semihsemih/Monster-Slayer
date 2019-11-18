@@ -30,19 +30,25 @@ new Vue({
     healUp: function () {
       const point = this.randomPoint(this.heroHealUpMultiplier);
       this.heroHealth += point;
-      console.log('Hero: ' + this.heroHealth)
-      console.log('Monster: ' + this.monsterHealth)
     },
     giveUp: function() {
       this.heroHealth = 0;
-      console.log('Hero: ' + this.heroHealth)
-      console.log('Monster: ' + this.monsterHealth)
     },
     monsterAttack: function () {
       const point = this.randomPoint(this.monsterAttackMultiplier);
       this.heroHealth -= point;
-      console.log('Hero: ' + this.heroHealth)
-      console.log('Monster: ' + this.monsterHealth)
+    }
+  },
+  computed: {
+    heroProgress: function () {
+      return {
+        width : this.heroHealth + '%'
+      }
+    },
+    monsterProgress: function () {
+      return {
+        width : this.monsterHealth + '%'
+      }
     }
   }
 });

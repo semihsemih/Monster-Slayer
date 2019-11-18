@@ -12,16 +12,16 @@
         <div class="small-6 columns">
             <h1 class="text-center">Hero</h1>
             <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
-
+                <div class="healthbar text-center" :style="heroProgress" style="background-color: green; margin: 0; color: white;">
+                    {{ heroHealth + ' %' }}
                 </div>
             </div>
         </div>
         <div class="small-6 columns">
             <h1 class="text-center">Monster</h1>
             <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
-
+                <div class="healthbar text-center" :style="monsterProgress" style="background-color: green; margin: 0; color: white;">
+                    {{ monsterHealth + ' %' }}
                 </div>
             </div>
         </div>
