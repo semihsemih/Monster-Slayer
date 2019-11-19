@@ -37,6 +37,10 @@ new Vue({
     monsterAttack: function () {
       const point = this.randomPoint(this.monsterAttackMultiplier);
       this.heroHealth -= point;
+    },
+    gameReset: function () {
+      this.heroHealth = 100;
+      this.monsterHealth = 100;
     }
   },
   computed: {
@@ -48,6 +52,26 @@ new Vue({
     monsterProgress: function () {
       return {
         width : this.monsterHealth + '%'
+      }
+    }
+  },
+  watch: {
+    heroHealth: function (event) {
+      if (this.heroHealth >= 100) {
+        this.heroHealth = 100;
+      } else if (this.heroHealth <= 0) {
+        this.heroHealth = 0;
+        if (confirm('YOU LOST! Do you want to try again?')) {
+          this.gameReset();
+        }
+      }
+    },
+    monsterHealth: function (event) {
+      if (this.monsterHealth <= 0) {
+        this.monsterHealth = 0;
+        if (confirm('YOU WIN! Do you want to try again?')) {
+          this.gameReset();
+        }
       }
     }
   }
