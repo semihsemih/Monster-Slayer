@@ -7,7 +7,8 @@ new Vue({
     heroSpecialAttackMultiplier: 25,
     heroHealUpMultiplier: 20,
     monsterAttackMultiplier: 15,
-    gameIsOn: false
+    gameIsOn: false,
+    attackLogs: []
   },
   methods: {
     startGame: function () {
@@ -19,12 +20,13 @@ new Vue({
     attack: function () {
       const point = this.randomPoint(this.heroAttackMultiplier);
       this.monsterHealth -= point;
+      this.addToLog({'text': `Hero Attack ${point} Point`, 'turn' : 'hero'})
       this.monsterAttack();
-
     },
     specialAttack: function () {
       const point = this.randomPoint(this.heroSpecialAttackMultiplier);
       this.monsterHealth -= point;
+      this.addToLog({'text': `Hero Attack ${point} Point`, 'turn' : 'hero'})
       this.monsterAttack();
     },
     healUp: function () {
@@ -33,14 +35,20 @@ new Vue({
     },
     giveUp: function() {
       this.heroHealth = 0;
+      this.addToLog({'text': `Hero Give Up`, 'turn' : 'hero'})
     },
     monsterAttack: function () {
       const point = this.randomPoint(this.monsterAttackMultiplier);
       this.heroHealth -= point;
+      this.addToLog({'text': `Monster Attack ${point} Point`, 'turn' : 'monster'})
     },
     gameReset: function () {
       this.heroHealth = 100;
       this.monsterHealth = 100;
+      this.attackLogs = [];
+    },
+    addToLog: function (log) {
+      this.attackLogs.push(log);
     }
   },
   computed: {
@@ -60,7 +68,6 @@ new Vue({
       if (this.heroHealth >= 100) {
         this.heroHealth = 100;
       } else if (this.heroHealth <= 0) {
-        this.heroHealth = 0;
         if (confirm('YOU LOST! Do you want to try again?')) {
           this.gameReset();
         }
@@ -68,7 +75,6 @@ new Vue({
     },
     monsterHealth: function (event) {
       if (this.monsterHealth <= 0) {
-        this.monsterHealth = 0;
         if (confirm('YOU WIN! Do you want to try again?')) {
           this.gameReset();
         }
